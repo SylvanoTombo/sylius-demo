@@ -1,0 +1,86 @@
+sylius_admin:
+    resource: "@SyliusAdminBundle/Resources/config/routing.yml"
+    prefix: /admin
+
+sylius_paypal_admin:
+    resource: "@SyliusPayPalPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin
+
+sylius_admin_ajax_customer_group_search_by_name:
+    path: /customer_group/search
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer_group:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Default]
+            permission: true
+            repository:
+                method: findByName
+                arguments: 
+                    name: $name
+                    limit: 10
+
+sylius_admin_ajax_customer_group_by_code:
+    path: /customer_group/code
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer_group:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Default]
+            permission: true
+            repository:
+                method: findByCode
+                arguments: 
+                    code: $code
+
+sylius_admin_ajax_customer_group_index:
+    path: /customer_group
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer_group:indexAction
+        _format: json
+        _sylius:
+            permission: true
+            grid: sylius_admin_customer_group
+
+
+sylius_admin_ajax_customer_search_by_name:
+    path: /customer/search
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Default]
+            permission: true
+            repository:
+                method: findByNamePart
+                arguments: 
+                    email: $name
+                    limit: 10
+
+sylius_admin_ajax_customer_by_email:
+    path: /customer/email
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Default]
+            permission: true
+            repository:
+                method: findByEmail
+                arguments: 
+                    email: $email
+
+sylius_admin_ajax_customer_index:
+    path: /customer
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.customer:indexAction
+        _format: json
+        _sylius:
+            permission: true
+            grid: sylius_admin_customer

@@ -1,0 +1,47 @@
+<div class="ui two column stackable grid">
+    {{ form_errors(form) }}
+    <div class="column">
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'sylius.ui.customer_details'|trans }}</h4>
+            <div class="two fields">
+            </div>
+            <div class="two fields">
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.lastName) }}
+            </div>
+            {{ form_row(form.email) }}
+            {{ form_row(form.groups, {
+                'remote_url': path('sylius_admin_ajax_customer_group_search_by_name'),
+                'remote_criteria_type': 'contains',
+                'remote_criteria_name': 'name',
+                'load_edit_url': path('sylius_admin_ajax_customer_group_by_code')
+            }) }}
+        </div>
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'sylius.ui.extra_information'|trans }}</h4>
+            {{ form_row(form.phoneNumber) }}
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'app.ui.customer_management'|trans }}</h4>
+            </div>
+        </div>
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'sylius.ui.account_credentials'|trans }}</h4>
+            {% if customer.user is empty or customer.user.id is null %}
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                       {{ form_row(form.createUser) }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if form.user is defined %}
+                <div id="user-form" {% if form.user.vars.data.id is not defined %} style="display: none" {% endif %}>
+                    {{ form_row(form.user.plainPassword) }}
+                    {{ form_row(form.user.enabled) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
